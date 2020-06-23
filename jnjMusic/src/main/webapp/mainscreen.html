@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<!--url=jdbc:postgresql://database-1.cis8fsnxixal.us-east-1.rds.amazonaws.com:5432/myDatabase;-->
+<!--name=jean;-->
+<!--password=P@ssword-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="mainScreen.css">
+    <title>Main</title>
+</head>
+<body>
+    <header id="header">
+        <nav id="nav">
+            <a href="index.html"><img src="templogo.png" id="image"></a>
+            <h6 id="userName1"></h6>
+            <!-- <img src="templogo.png" id="image">   -->
+        </nav>
+    </header>
+    <h2>Search for an Instrument</h2>
+    <select id="#listeditems">
+        <option>Category</option>
+        <option><a href="#">Woodwinds</a></option>
+        <option><a href="#">Brass</a></option>
+        <option><a href="#">Strings</a></option>
+    </select>
+    <select id="Instrument">
+        <option>None</option>
+    </select>
+    <button name="finditems" id="findItems">Find Items</button>
+      <!-- Results should go into this container -->
+      <div id="resultContainer">
+      </div>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<!--        <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>-->
+        <script type="text/javascript" src="jQuery.js"></script>
+        <script type="text/javascript" src="shoppingapi.js"></script>
+        <script>
+            const foundMap = [];
+            const useremail = document.cookie.split(";")[0].slice(3);
+            //document.cookie = "em=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.querySelector("#userName1").textContent="Welcome! "+useremail;
+                document.getElementById("#listeditems").addEventListener("change", function() {
+
+                    if (document.getElementById("Instrument").length > 1)
+                    {
+                        while (document.getElementById("Instrument").firstChild)
+                        {
+                            document.getElementById("Instrument").removeChild(document.getElementById("Instrument").lastChild);
+                        }
+                    }
+
+                    while (document.getElementById("resultContainer").firstChild)
+                    {
+                        document.getElementById("resultContainer").removeChild(document.getElementById("resultContainer").lastChild);
+                    }
+
+
+                if (document.getElementById("#listeditems").value == ("Woodwinds"))
+                {
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Clarinet";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Bass Clarinet";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Flute";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Soprano Saxophone";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Clarinet";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Alto Saxophone" ;
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Baritone Saxophone" ;
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Tenor Saxophone";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Bassoon";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Oboe";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="English Horn";
+                }
+                else if (document.getElementById("#listeditems").value == ("Brass"))
+                {
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Trumpet";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Trombone";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Baritone";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Euphonium";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="French Horn";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Tuba";
+                }
+                else if (document.getElementById("#listeditems").value == ("Strings"))
+                {
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Violin";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Viola";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Cello";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="String Bass";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Guitar";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Piano";
+                    document.getElementById("Instrument").appendChild(document.createElement("option")).text="Harp";
+                }
+            });
+
+            jQuery(function($) {
+              $.ebay.appid = "JeanAldo-JNJMusic-PRD-9c51f635b-4e562705";
+              $.ebay.siteid = 0;
+
+              $(document).ready(function () {
+                  // FindItems
+                  $("#findItems").click(
+                      function () {
+                          while (document.getElementById("resultContainer").firstChild)
+                          {
+                              document.getElementById("resultContainer").removeChild(document.getElementById("resultContainer").lastChild);
+                          }
+
+                          $("#findItems.status").text("Loading...");
+                          $.ebay.call("FindItems",
+                              {
+                                  QueryKeywords: document.getElementById("Instrument").value,
+                                  HideDuplicateItems: true,
+                                  MaxEntries: 100000},
+                                  function (response) {
+                                      //console.log(response);
+                                      // In the response to FindItems the Item element is an array of objects
+                                      let items = response.Item || [];
+                                      //console.log(items[0])
+                                      $("#finditems ul").empty();
+                                      $("#finditems .status").text("Returned " + items.length + " items (of " + response.TotalItems + ")" );
+                                      $.each(items, function (i, item) {
+
+                                          let data =
+                                              {
+
+                                                  src: item.GalleryURL,
+                                                  price: item.ConvertedCurrentPrice.Value,
+                                                  upc: item.ItemID,
+                                                  catid: item.PrimaryCategoryID,
+                                                  catdes: item.PrimaryCategoryName,
+                                                  sale: item.Title
+                                              }
+
+                                      $.ajax
+                                      (
+                                          {
+                                              timeoutSeconds: 1000,
+                                              type: "POST",
+                                              url: "servlett2",
+                                              contentType: "application/json",
+                                              dataType: "json",
+                                              data: JSON.stringify(data),
+                                              success: function (response)
+                                              {
+                                                  tempo = response.upc;
+                                                  foundMap.push([response.upc,response.src,response.sale,response.price,
+                                                      response.des,response.cat]);
+                                              }
+                                          }
+                                       );
+
+                                      document.getElementById("resultContainer").appendChild(document.createElement("div"));
+                                      let html =
+                                          `
+                                                        <div class="instrumentItem">
+                                                            <a onclick="newFunc(${data.upc})"; return=false>
+                                                            <img src="${data.src}" style="display: inline; width: 150px; height: 150px; border-radius: 2em">
+                                                            <ul style="display: inline-block" style="color: black; font-size: 50px">
+                                                                <br>
+                                                                <li style="margin-bottom: 10px">ID: ${data.upc}</li>
+                                                                <br>
+                                                                <li style="margin-bottom: 10px">${data.sale}</li>
+                                                                <br>
+                                                                <li>Price: \$${data.price}</li>
+                                                                <br>
+                                                            </ul>
+                                                            </a>
+                                                        </div>
+                                                      `
+                                      if (response.available != "false") document.getElementById("resultContainer").lastChild.innerHTML = html;
+
+                                  })
+                              });
+                      });
+              });
+            });
+            var cookieString;
+            function newFunc(arg)
+            {
+                let count = 0;
+                while (count< foundMap.length)
+                {
+                    if (arg == foundMap[count][0])
+                    {
+                        sessionStorage.setItem("em",useremail);
+                        sessionStorage.setItem("upc",foundMap[count][0]);
+                        sessionStorage.setItem("src",foundMap[count][1]);
+                        sessionStorage.setItem("sale",foundMap[count][2])
+                        sessionStorage.setItem("price",foundMap[count][3]);
+                        sessionStorage.setItem("des",foundMap[count][4]);
+                        sessionStorage.setItem("cat",foundMap[count][5]);
+                        window.open("itemPurchase.html","_self");
+                    }
+                    count++
+                }
+            }
+          </script>
+      </div>
+</body>
+</html>

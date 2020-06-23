@@ -1,0 +1,94 @@
+* {
+    background: url(UIHere.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-weight: 900;
+    font-family: 'Noto Serif JP', serif;
+}
+
+#img, img {
+    width: 60px;
+    height: 80px;
+}
+
+
+
+
+#primaryInstrument {
+    margin-left: 5px;
+}
+
+img {
+    margin-left: 20%;
+    margin-top: 5%;
+}
+
+
+h3 {
+    color: black;
+    font-style: italic;
+    font-size: 40px;
+}
+
+#redirectToLogin {
+    color: black;
+    font-style: italic;
+    font-weight: 900;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+nav a {
+    font-size: 20px;
+    font-weight: 900;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 60%;
+}
+
+small {
+    font-weight: 900;
+    font-style: italic;
+    font-size: 15px;
+}
+
+label {
+    font-weight: 900;
+    padding: 10px 0 10px 0;
+}
+
+.formInput {
+    border-color: black;
+    color: whitesmoke;
+}
+
+.formInput::placeholder {
+    color: gray;
+    font-style: italic;
+    font-weight: 900;
+}
+
+#submitButton {
+    border-color: black;
+    color: black;
+    font-style: italic;
+    font-weight: 900;
+}
+
+#submitButton:hover {
+    color: gray;
+    font-size: 20px;
+}
+
+#background {
+    z-index: 1;
+}
+
+#formDiv {
+    margin-left: 38%;
+    margin-right: 35%;
+    margin-bottom: 1%;
+}

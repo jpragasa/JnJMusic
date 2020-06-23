@@ -1,0 +1,42 @@
+* {
+    background: url(UIHere.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 900;
+    font-style: italic;
+}
+
+#header {
+    text-align: center;
+}
+
+#adminChoices {
+    text-align: center;
+    font-weight: 900;
+    border-color: black;
+}
+
+#layout {
+    margin-top: 15%;
+}
+
+h1 {
+    margin-bottom: 3%;
+    font-size: 5em;
+}
+
+h4 {
+    margin-bottom: 3%;
+}
+
+button {
+    font-size: 15px;
+    color: black;
+}
+
+a {
+    color: black;
+}

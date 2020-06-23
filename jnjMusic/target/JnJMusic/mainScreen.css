@@ -1,0 +1,72 @@
+* {
+    background: url(UIHere.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 900;
+}
+
+#resultContainer {
+    margin-left: 18%;
+    margin-top: 5%;
+    border-color: black;
+    border-radius: 1em;
+    border-style: solid;
+    overflow: auto;
+    width: 70%;
+    height: 450px;
+}
+
+#findItems {
+    border-radius: 1em;
+}
+
+select {
+    border-color: black;
+    border-radius: 2em;
+    font-size: 20px;
+    margin-left: 18%;
+}
+
+h2 {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    float: left;
+}
+
+/*a:hover {*/
+/*    width: 50%;*/
+/*    height: 50%;*/
+/*}*/
+
+/*.instrumentItem {*/
+/*    clear: left;*/
+/*}*/
+
+#image {
+    width: 40px;
+    height: 40px;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 10px;
+    float: right;
+}
+
+h6 {
+    text-align: right;
+    padding: 10px 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+

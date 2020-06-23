@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="newUser.css">
+    <title>New User</title>
+    <script src = "jQuery.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="background">
+    <header id="header">
+        <nav>
+            <!-- logo to redirect to home screen -->
+            <a id="image" href="index.html">
+                <img src="templogo.png" alt="A simple music note logo" class="img-thumbnail">
+            </a>
+        </nav>
+        <div id="formDiv">
+<!--        <form id = "newUserForm">-->
+            <h3>Create New Account</h3>
+            <div class="form-group">
+              <label for="emailAddress">Email address</label>
+              <input type="email" class="form-control formInput" placeholder="john_doe@something.com" id="emailAddress" aria-describedby="emailHelp" required>
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="userPassword">Password</label>
+              <input type="password" class="form-control formInput" placeholder="password" id="userPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="userPasswordConf">Confirm Password</label>
+                <input type="password" class="form-control formInput" placeholder="password" id="userPasswordConf" required>
+                <a id="redirectToLogin" href="login.html">Already have an account?</a>
+              </div>
+              <div class="form-group">
+                <label for="Phone#">Phone #</label>
+                <input type="text" class="form-control formInput" placeholder="111-222-3333" id="phoneNumber" required>
+              </div>
+              <div class="form-group">
+                <label for="primaryInstr">Primary Instrument</label>
+                <!-- <input type="text" class="form-control formInput" placeholder="Clarinet, Trumpet, Violin" id="primaryInstrument" required> -->
+                <select id="primaryInstrument">
+                    <!-- flute, clarinet, soprano sax, alto sax, , tenor sax, Bassoon, trumpet, trombone, tuba, euphonium, baritone, violin, viola, cello, string bass, guitar, piano and harp -->
+                    <!-- Specific -->
+                    <option>Clarinet</option>
+                    <option>Bass Clarinet</option>
+                    <option>Flute</option>
+                    <option>Soprano Saxophone</option>
+                    <option>Alto Saxophone</option>
+                    <option>Tenor Saxophone</option>
+                    <option>Baritone Saxophone</option>
+                    <option>Bassoon</option>
+                    <option>Oboe</option>
+                    <option>English Horn</option>
+                    <option>Trumpet</option>
+                    <option>Trombone</option>
+                    <option>Baritone</option>
+                    <option>Euphonium</option>
+                    <option>French Horn</option>
+                    <option>Tuba</option>
+                    <option>Violin</option>
+                    <option>Viola</option>
+                    <option>Cello</option>
+                    <option>String Bass</option>
+                    <option>Guitar</option>
+                    <option>Piano</option>
+                    <option>Harp</option>
+                </select>
+              </div>
+            <button  class="btn btn-primary" id="submitButton">Submit</button>
+            <!-- </form>-->
+          </div>
+    </header>
+    </div>
+
+    <script>
+        document.querySelector('#submitButton').addEventListener('click', (e) => {
+            //alert(document.getElementById("emailAddress").value);
+            if (document.getElementById("userPasswordConf").value ==
+                document.getElementById("userPassword").value) {
+                //
+                let data = {
+                    em: document.getElementById("emailAddress").value,
+                    pw: document.getElementById("userPassword").value,
+                    ph: document.getElementById("phoneNumber").value,
+                    pi: document.getElementById("primaryInstrument").value,
+                    move: "new"
+                }
+                //alert(data);
+
+                $.ajax(
+                    {
+                        timeoutSeconds: 1000000,
+                        type: "POST",
+                        url: "servletty",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function (response) {
+
+                            if (response.response == "Email Already Exists")
+                            {
+                                window.open("login.html","_self");
+                            }
+                            document.cookie = "em="+response.email+"; path=/"
+                            console.log(response.email)
+                            console.log(document.cookie);
+                            window.open("mainscreen.html","_self");
+
+                        }
+
+                    });
+            } else {
+                alert("passwords must be the same");
+            }
+        });
+
+
+    </script>
+</body>
+</html>

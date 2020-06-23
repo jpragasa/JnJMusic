@@ -1,0 +1,42 @@
+* { 
+    background: url(UIHere.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-weight: 900;
+    font-family: 'Noto Serif JP', serif;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    margin-right: 2%;
+    margin-bottom: 3%;
+    font-style: italic;
+    font-size: 80px;
+}
+
+#img, img {
+    width: 60px;
+    height: 80px;
+}
+
+img {
+    margin-left: 80%;
+    margin-top: 5%;
+}
+
+#aboutContainer {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: justify;
+}
+
+p {
+    font-style: italic;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 50px;
+}

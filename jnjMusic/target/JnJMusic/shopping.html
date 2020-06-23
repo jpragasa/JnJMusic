@@ -1,0 +1,61 @@
+<html>
+<head>
+  <meta lang = "en">
+  <meta charset="UTF-8">
+  <title>eBay Shopping API jQuery Plugin Examples</title>
+  <script type="text/javascript" src="jQuery.js"></script>
+  <script type="text/javascript" src="shoppingapi.js"></script>  
+  <script>
+
+    jQuery(function($) {
+     // Your eBay appid (get one at http://developer.ebay.com/join/)
+     $.ebay.appid = "JeanAldo-JNJMusic-PRD-9c51f635b-4e562705";
+     $.ebay.siteid = 0; 
+
+     $(document).ready(function () {
+       // FindItems
+       $("#finditems button").click(
+         function () {
+           $("#finditems .status").text("Loading...");
+           $.ebay.call("FindItems", 
+                       {QueryKeywords: $("#finditems input").val(),
+                        HideDuplicateItems: true,
+                        MaxEntries: 100},
+                       function (response) {
+                         // In the response to FindItems the Item element is an array of objects
+                         var items = response.Item || [];
+                         console.log(items[0])
+                         $("#finditems ul").empty();
+                         $("#finditems .status").text("Returned " + items.length + " items (of " + response.TotalItems + ")" );
+                         $.each(items, function (i, item) {
+                            var pic = document.createElement("img")
+                            pic.src = item.GalleryURL;
+                                $("#finditems ul").append( pic,
+                                  $("<li/>").append(
+                                    $("<a/>").
+                                    text(item.ItemID + ": " + item.Title).
+                                    attr("href",item.ViewItemURLForNaturalSearch)));
+                                    
+                                   }    
+                                );
+                       });
+         });
+     });
+    });
+  </script>
+</head>
+<body>
+<h1>eBay Shopping API jQuery Plugin Examples</h1>
+<div id="finditems">
+<h2>FindItems</h2>
+<input type="text"/> <button>Search By Keywords</button>
+<div class="status"></div>
+<ul>
+</ul>
+</div>
+</div>
+<br/>
+<br/>
+<br/>
+</body>
+</html>

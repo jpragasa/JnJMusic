@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="userEditing.css" rel="stylesheet">
+    <title>User's Sales</title>
+</head>
+<body>
+    <a href="adminScreen.html"><img src="templogo.png"></a>
+    <header id="header">
+        <h1>User's Purchases</h1>
+    </header>
+    <div id="user">
+        <select class="form-control" id="userEmail">
+            <option>None</option>
+        </select>
+    </div>
+    <div id="resultContainer">
+    </div>
+    <script src = "jQuery.js"></script>
+    <script>
+        var transan = []
+        $.ajax
+        (
+            {
+                timeoutSeconds: 1000,
+                type: "GET",
+                url: "servletty",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    var count = 0;
+                    while (count < response.emails.length)
+                    {
+                        sessionStorage.setItem(response.emails[count].email,response.emails[count])
+                        document.getElementById("userEmail").appendChild(document.createElement("option")).text=response.emails[count].email;
+                        count++;
+                    }
+                }
+            }
+        );
+        $.ajax
+        (
+            {
+                timeoutSeconds: 1000,
+                type: "GET",
+                url: "servlett2",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    let count = 0;
+                    while (count < response.trans.length)
+                    {
+                        transan.push(response.trans[count]);
+                        count++;
+                    }
+                }
+            }
+        );
+
+        document.getElementById("userEmail").addEventListener("change", function()
+        {
+            console.log("Changed")
+            while (document.getElementById("resultContainer").firstChild)
+            {
+                document.getElementById("resultContainer").removeChild(document.getElementById("resultContainer").lastChild);
+            }
+            let temp =document.getElementById("userEmail").value
+            console.log(temp)
+            let count3 = 0;
+            while (count3 < transan.length)
+            {
+                if (temp == transan[count3].email)
+                {
+
+                    document.getElementById("resultContainer").appendChild(document.createElement("div"));
+                    let html =
+                        `
+                                                                <div class="instrumentItem">
+                                                                    <ul style="display: inline-block" style="color: black; font-size: 50px">
+                                                                        <li style="margin-bottom: 10px">ID: ${transan[count3].upc}</li>
+                                                                        <li style="margin-bottom: 10px">${transan[count3].trans_id}</li>
+                                                                        <li>Price: \$${transan[count3].price}</li>
+                                                                       <li>Date-Time: ${transan[count3].date +"  "+transan[count3].time}</li>
+                                                                       <br>
+                                                                       <br>
+                                                                       <hr>
+                                                                       <hr>
+                                                                    </ul>
+                                                                    </a>
+
+                                                                </div>
+                                                              `
+                    document.getElementById("resultContainer").lastChild.innerHTML = html;
+                }
+                count3++;
+            }
+        });
+    </script>
+
+</body>
+</html>
